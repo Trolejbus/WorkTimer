@@ -41,9 +41,10 @@ namespace WorkTimer.Services.Controllers
             {
                 Text = "Log as work",
             };
+            var timeIdle = _timeService.GetCurrentDate() - lockedTime;
             var answer = _quickActionController.Ask(new AskModel()
             {
-                Question = "Test",
+                Text = $"You have spend {timeIdle:hh\\:mm\\:ss} as idle. Where do you want to spend time?",
                 Answers = new List<AskAnswerModel>()
                     {
                         breakAnswer,

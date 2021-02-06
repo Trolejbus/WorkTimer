@@ -18,6 +18,7 @@ namespace WorkTimer.CustomControls.QuickActions
 
         public void Init()
         {
+            questionLabel.Text = Question.Text;
             okButton.Enabled = false;
             var questions = Question.Answers;
             foreach (var question in questions)
@@ -58,8 +59,23 @@ namespace WorkTimer.CustomControls.QuickActions
 
         private void okButton_Click(object sender, System.EventArgs e)
         {
+            CloseForm();
+        }
+
+        private void answerListBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (!okButton.Enabled)
+            {
+                return;
+            }
+
+            CloseForm();
+        }
+
+        private void CloseForm()
+        {
             DialogResult = DialogResult.OK;
-            Close();
+            base.Close();
         }
     }
 }
