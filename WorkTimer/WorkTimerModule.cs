@@ -15,6 +15,7 @@ namespace WorkTimer
         {
             builder.RegisterType<ApplicationController>().As<IApplicationController>().SingleInstance();
             builder.RegisterType<MusicPlayerController>().As<IMusicPlayerController>().SingleInstance();
+            builder.RegisterType<QuickActionController>().As<IQuickActionController>().SingleInstance();
         }
     }
 }

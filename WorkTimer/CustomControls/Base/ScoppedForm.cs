@@ -8,6 +8,8 @@ namespace WorkTimer.CustomControls.Base
 {
     public partial class ScoppedForm : Form
     {
+        protected ILifetimeScope Scope { get; private set; }
+
         public ScoppedForm()
         {
             InitializeComponent();
@@ -15,6 +17,7 @@ namespace WorkTimer.CustomControls.Base
 
         public void SetScope(ILifetimeScope scope)
         {
+            Scope = scope;
             OnScopedSet(scope);
             SetChildScope(scope);
         }

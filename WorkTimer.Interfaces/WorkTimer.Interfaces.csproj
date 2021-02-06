@@ -42,9 +42,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\IApplicationController.cs" />
+    <Compile Include="Controllers\ILockedController.cs" />
     <Compile Include="Controllers\IMusicPlayerController.cs" />
     <Compile Include="Controllers\ITimerController.cs" />
     <Compile Include="Controllers\ITimerTaskController.cs" />
+    <Compile Include="Controllers\IWorkController.cs" />
+    <Compile Include="Controllers\IWorkTimerController.cs" />
+    <Compile Include="Controllers\IQuickActionController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Base\IBaseRepository.cs" />
     <Compile Include="Repositories\IWorkTaskRepository.cs" />

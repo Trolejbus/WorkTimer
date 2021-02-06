@@ -3,7 +3,7 @@ using WorkTimer.Interfaces.Services;
 
 namespace WorkTimer.Services.Services
 {
-    public class RealTimeService: ITimeService
+    public class RealTimeService : ITimeService
     {
         public DateTime GetCurrentDate()
         {

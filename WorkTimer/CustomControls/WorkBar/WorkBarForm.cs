@@ -3,6 +3,10 @@ using System.Drawing;
 using Autofac;
 using WorkTimer.Behaviours;
 using WorkTimer.CustomControls.Base;
+using WorkTimer.Domain.Models.Enums;
+using WorkTimer.Domain.Models.Models;
+using WorkTimer.Interfaces.Controllers;
+using WorkTimer.Services.Controllers;
 using WorkTimer.UI.Enum;
 using WorkTimer.UI.Interfaces;
 
@@ -11,6 +15,9 @@ namespace WorkTimer.CustomControls.WorkBar
     public partial class WorkBarForm : ScoppedForm, IWorkBar
     {
         private readonly IWorkBarController workBarController;
+        private IWorkController workController;
+        private WorkTimerEvents events;
+        private bool pause = true;
 
         public WorkBarForm(IWorkBarController workBarController)
         {
@@ -35,28 +42,19 @@ namespace WorkTimer.CustomControls.WorkBar
             workBarController.SetWorkBar(this);
         }
 
-        /*private void TimeManager_OnStateChanged(WorkTimerStates currentState)
-        {
-            switch (currentState)
-            {
-                case WorkTimerStates.Stop:
-                    playPauseButton.StaticImage = Properties.Resources.play3;
-                    playPauseButton.HoverImage = Properties.Resources.play3_hover;
-                    playPauseButton.DownImage = Properties.Resources.play3_hover;
-                    break;
-                case WorkTimerStates.Start:
-                    playPauseButton.StaticImage = Properties.Resources.pause2;
-                    playPauseButton.HoverImage = Properties.Resources.pause_hover;
-                    playPauseButton.DownImage = Properties.Resources.pause_hover;
-                    break;
-                default:
-                    break;
-            }
-        }*/
-
         private void playPauseButton_Click(object sender, EventArgs e)
         {
-            
+            if (pause)
+            {
+                workController.StartOrResume(new WorkLogModel()
+                {
+                    Type = WorkType.Work,
+                });
+            }
+            else
+            {
+                workController.StartBreak();
+            }
         }
 
         private void hoverButton_Click(object sender, EventArgs e)
@@ -67,6 +65,41 @@ namespace WorkTimer.CustomControls.WorkBar
         public void SetVisible(ShowState state)
         {
             Visible = state == ShowState.Shown;
+        }
+
+        protected override void OnScopedSet(ILifetimeScope scope)
+        {
+            base.OnScopedSet(scope);
+            workController = scope.Resolve<IWorkController>();
+            events = scope.Resolve<WorkTimerEvents>();
+            events.OnWorkStarted += Events_OnWorkStarted;
+        }
+
+        private void Events_OnWorkStarted(WorkLogModel model)
+        {
+            pause = model.Type == WorkType.Break;
+            UpdateIcons();
+        }
+
+        private void UpdateIcons()
+        {
+            if (pause)
+            {
+                playPauseButton.StaticImage = Properties.Resources.play3;
+                playPauseButton.HoverImage = Properties.Resources.play3_hover;
+                playPauseButton.DownImage = Properties.Resources.play3_hover;
+            }
+            else
+            {
+                playPauseButton.StaticImage = Properties.Resources.pause2;
+                playPauseButton.HoverImage = Properties.Resources.pause_hover;
+                playPauseButton.DownImage = Properties.Resources.pause_hover;
+            }
+        }
+
+        private void settingsButton_Click(object sender, EventArgs e)
+        {
+            new WorkTimerForm(Scope).ShowDialog();
         }
     }
 }

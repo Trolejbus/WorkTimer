@@ -32,14 +32,16 @@
             this.moveControlPanel = new System.Windows.Forms.Panel();
             this.controlTableLayout = new System.Windows.Forms.TableLayoutPanel();
             this.mainControlButtonsTableLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.hoverButton = new ImageButton();
-            this.playPauseButton = new ImageButton();
-            this.clock1 = new Clock();
+            this.hoverButton = new WorkTimer.CustomControls.ImageButton();
+            this.playPauseButton = new WorkTimer.CustomControls.ImageButton();
+            this.settingsButton = new WorkTimer.CustomControls.ImageButton();
+            this.clock1 = new WorkTimer.CustomControls.WorkBar.Clock();
             this.mainTableLayout.SuspendLayout();
             this.controlTableLayout.SuspendLayout();
             this.mainControlButtonsTableLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.hoverButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.playPauseButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.settingsButton)).BeginInit();
             this.SuspendLayout();
             // 
             // mainTableLayout
@@ -84,7 +86,7 @@
             this.controlTableLayout.Name = "controlTableLayout";
             this.controlTableLayout.RowCount = 4;
             this.controlTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
-            this.controlTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.controlTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.controlTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.controlTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 15F));
             this.controlTableLayout.Size = new System.Drawing.Size(52, 248);
@@ -92,17 +94,19 @@
             // 
             // mainControlButtonsTableLayout
             // 
-            this.mainControlButtonsTableLayout.ColumnCount = 2;
-            this.mainControlButtonsTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.mainControlButtonsTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.mainControlButtonsTableLayout.ColumnCount = 3;
+            this.mainControlButtonsTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.mainControlButtonsTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.mainControlButtonsTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.mainControlButtonsTableLayout.Controls.Add(this.hoverButton, 0, 0);
             this.mainControlButtonsTableLayout.Controls.Add(this.playPauseButton, 0, 0);
+            this.mainControlButtonsTableLayout.Controls.Add(this.settingsButton, 2, 0);
             this.mainControlButtonsTableLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainControlButtonsTableLayout.Location = new System.Drawing.Point(1, 232);
             this.mainControlButtonsTableLayout.Margin = new System.Windows.Forms.Padding(0);
             this.mainControlButtonsTableLayout.Name = "mainControlButtonsTableLayout";
             this.mainControlButtonsTableLayout.RowCount = 1;
-            this.mainControlButtonsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.mainControlButtonsTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.mainControlButtonsTableLayout.Size = new System.Drawing.Size(48, 15);
             this.mainControlButtonsTableLayout.TabIndex = 3;
             // 
@@ -111,7 +115,7 @@
             this.hoverButton.DownImage = global::WorkTimer.Properties.Resources.hide_hover;
             this.hoverButton.HoverImage = global::WorkTimer.Properties.Resources.hide_hover;
             this.hoverButton.Image = global::WorkTimer.Properties.Resources.hide;
-            this.hoverButton.Location = new System.Drawing.Point(24, 0);
+            this.hoverButton.Location = new System.Drawing.Point(16, 0);
             this.hoverButton.Margin = new System.Windows.Forms.Padding(0);
             this.hoverButton.Name = "hoverButton";
             this.hoverButton.Size = new System.Drawing.Size(15, 15);
@@ -123,18 +127,34 @@
             // 
             // playPauseButton
             // 
-            this.playPauseButton.DownImage = global::WorkTimer.Properties.Resources.pause_hover;
-            this.playPauseButton.HoverImage = global::WorkTimer.Properties.Resources.pause_hover;
-            this.playPauseButton.Image = global::WorkTimer.Properties.Resources.pause2;
+            this.playPauseButton.DownImage = global::WorkTimer.Properties.Resources.play3_hover;
+            this.playPauseButton.HoverImage = global::WorkTimer.Properties.Resources.play3_hover;
+            this.playPauseButton.Image = global::WorkTimer.Properties.Resources.play3;
             this.playPauseButton.Location = new System.Drawing.Point(0, 0);
             this.playPauseButton.Margin = new System.Windows.Forms.Padding(0);
             this.playPauseButton.Name = "playPauseButton";
             this.playPauseButton.Size = new System.Drawing.Size(15, 15);
             this.playPauseButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.playPauseButton.StaticImage = global::WorkTimer.Properties.Resources.pause2;
+            this.playPauseButton.StaticImage = global::WorkTimer.Properties.Resources.play3;
             this.playPauseButton.TabIndex = 1;
             this.playPauseButton.TabStop = false;
             this.playPauseButton.Click += new System.EventHandler(this.playPauseButton_Click);
+            // 
+            // settingsButton
+            // 
+            this.settingsButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.settingsButton.DownImage = global::WorkTimer.Properties.Resources.setting_hover;
+            this.settingsButton.HoverImage = global::WorkTimer.Properties.Resources.setting_hover;
+            this.settingsButton.Image = global::WorkTimer.Properties.Resources.setting;
+            this.settingsButton.InitialImage = global::WorkTimer.Properties.Resources.setting;
+            this.settingsButton.Location = new System.Drawing.Point(32, 0);
+            this.settingsButton.Margin = new System.Windows.Forms.Padding(0);
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(16, 15);
+            this.settingsButton.StaticImage = global::WorkTimer.Properties.Resources.setting;
+            this.settingsButton.TabIndex = 3;
+            this.settingsButton.TabStop = false;
+            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
             // 
             // clock1
             // 
@@ -143,7 +163,7 @@
             this.clock1.Location = new System.Drawing.Point(1, 50);
             this.clock1.Margin = new System.Windows.Forms.Padding(0);
             this.clock1.Name = "clock1";
-            this.clock1.Size = new System.Drawing.Size(48, 24);
+            this.clock1.Size = new System.Drawing.Size(48, 48);
             this.clock1.TabIndex = 4;
             // 
             // WorkBarForm
@@ -161,6 +181,7 @@
             this.mainControlButtonsTableLayout.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.hoverButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.playPauseButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.settingsButton)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -174,5 +195,6 @@
         private ImageButton hoverButton;
         private ImageButton playPauseButton;
         private Clock clock1;
+        private ImageButton settingsButton;
     }
 }

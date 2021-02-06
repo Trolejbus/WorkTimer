@@ -18,6 +18,10 @@ namespace WorkTimer.Services
             builder.RegisterType<TimerController>().As<ITimerController>().SingleInstance();
             builder.RegisterType<RealTimeService>().As<ITimeService>().SingleInstance();
             builder.RegisterType<TimerTaskController>().As<ITimerTaskController>().SingleInstance();
+            builder.RegisterType<WorkController>().As<IWorkController>().SingleInstance();
+            builder.RegisterType<WorkTimerController>().As<IWorkTimerController>().SingleInstance();
+            builder.RegisterType<WorkTimerEvents>().As<WorkTimerEvents>().SingleInstance();
+            builder.RegisterType<LockedController>().As<ILockedController>().SingleInstance();
         }
     }
 }

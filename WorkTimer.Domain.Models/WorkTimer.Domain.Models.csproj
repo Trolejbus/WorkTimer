@@ -42,7 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\TimerState.cs" />
+    <Compile Include="Enums\WorkType.cs" />
     <Compile Include="Models\Base\DomainModel.cs" />
+    <Compile Include="Models\QuickActions\AskAnswerModel.cs" />
+    <Compile Include="Models\QuickActions\AskModel.cs" />
+    <Compile Include="Models\WorkLogModel.cs" />
     <Compile Include="Models\WorkTaskModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

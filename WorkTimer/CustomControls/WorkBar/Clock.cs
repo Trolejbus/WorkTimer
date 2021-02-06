@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using System;
+using System.Windows.Forms;
 using WorkTimer.Behaviours;
 using WorkTimer.CustomControls.Base;
 using WorkTimer.Domain.Models.Enums;
@@ -14,6 +15,7 @@ namespace WorkTimer.CustomControls.WorkBar
         private ITimerController timerController;
         private ITimeService dateService;
         private ITimerTaskController timerTaskController;
+        private IWorkTimerController workTimerController;
 
         public Clock()
         {
@@ -25,6 +27,7 @@ namespace WorkTimer.CustomControls.WorkBar
         {
             timerController = scope.Resolve<ITimerController>();
             timerTaskController = scope.Resolve<ITimerTaskController>();
+            workTimerController = scope.Resolve<IWorkTimerController>();
 
             timerController.OnTick += TimerController_OnTick;
             timerController.StateChanged += TimerController_StateChanged;
@@ -47,19 +50,20 @@ namespace WorkTimer.CustomControls.WorkBar
 
         private void TimerController_OnTick()
         {
-            var currentTime = timerTaskController.GetCurrentProgress();
-            this.InvokeEx(f => f.UpdateTime(currentTime));
+            this.InvokeEx(f => f.UpdateTime(workTimerController.FullTime, fullTimeLabel));
+            this.InvokeEx(f => f.UpdateTime(workTimerController.WorkTime, workTimeLabel));
+            this.InvokeEx(f => f.UpdateTime(workTimerController.CurrentTime, currentTimeLabel));
         }
 
-        private void UpdateTime(TimeSpan currentTime)
+        private void UpdateTime(TimeSpan currentTime, Label label)
         {
             if(currentTime.TotalHours > 0)
             {
-                label1.Text = $"{currentTime:mm\\:ss}";
+                label.Text = $"{currentTime:mm\\:ss}";
             }
             else
             {
-                label1.Text = $"{currentTime:hh\\:mm}";
+                label.Text = $"{currentTime:hh\\:mm}";
             }
         }
     }

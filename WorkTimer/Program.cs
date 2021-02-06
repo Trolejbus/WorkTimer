@@ -1,10 +1,14 @@
 ﻿using Autofac;
+using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using WorkTimer.Controllers;
 using WorkTimer.CustomControls;
 using WorkTimer.CustomControls.WorkBar;
+using WorkTimer.Domain.Models.Models.QuickActions;
 using WorkTimer.Interfaces.Controllers;
+using WorkTimer.Services.Controllers;
 using WorkTimer.UI.Interfaces;
 
 namespace WorkTimer
@@ -37,9 +41,28 @@ namespace WorkTimer
                 bar.Initialize();
 
                 applicationController.Initialize();
+                var events = scope.Resolve<WorkTimerEvents>();
+                var lockedController = scope.Resolve<ILockedController>();
+                var quickActionController = scope.Resolve<IQuickActionController>();
+                SystemEvents.SessionSwitch += SystemEvents_SessionSwitch(events);
 
                 Application.Run();
             }
+        }
+
+        private static SessionSwitchEventHandler SystemEvents_SessionSwitch(WorkTimerEvents events)
+        {
+            return (object sender, SessionSwitchEventArgs e) =>
+            {
+                if (e.Reason == SessionSwitchReason.SessionLock)
+                {
+                    events.SessionLocked();
+                }
+                else if (e.Reason == SessionSwitchReason.SessionUnlock)
+                {
+                    events.SessionUnlock();
+                }
+            };
         }
     }
 }
