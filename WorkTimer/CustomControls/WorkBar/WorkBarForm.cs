@@ -31,8 +31,10 @@ namespace WorkTimer.CustomControls.WorkBar
             dragWindow.FitToParentDimensionsDelayMin = new Point(0, moveControlPanel.Top + moveControlPanel.Margin.Top);
 
             Visible = true;
+            TopMost = true;
+
             Popup popup = new Popup();
-            popup.MakePopup(this);
+            popup.MakePopup(this, PopupPosition.TopRight);
 
             Width = 54;
         }

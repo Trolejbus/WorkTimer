@@ -10,6 +10,7 @@ namespace WorkTimer.CustomControls.QuickActions
         public AskForm()
         {
             InitializeComponent();
+            TopMost = true;
         }
 
         public AskModel Question { get; set; }

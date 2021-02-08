@@ -1,11 +1,14 @@
 ﻿using Autofac;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 using WorkTimer.Behaviours;
 using WorkTimer.CustomControls.Base;
 using WorkTimer.Domain.Models.Enums;
+using WorkTimer.Domain.Models.Models;
 using WorkTimer.Interfaces.Controllers;
 using WorkTimer.Interfaces.Services;
+using WorkTimer.Services.Controllers;
 
 namespace WorkTimer.CustomControls.WorkBar
 {
@@ -16,6 +19,7 @@ namespace WorkTimer.CustomControls.WorkBar
         private ITimeService dateService;
         private ITimerTaskController timerTaskController;
         private IWorkTimerController workTimerController;
+        private WorkTimerEvents events;
 
         public Clock()
         {
@@ -28,9 +32,11 @@ namespace WorkTimer.CustomControls.WorkBar
             timerController = scope.Resolve<ITimerController>();
             timerTaskController = scope.Resolve<ITimerTaskController>();
             workTimerController = scope.Resolve<IWorkTimerController>();
+            events = scope.Resolve<WorkTimerEvents>();
 
             timerController.OnTick += TimerController_OnTick;
             timerController.StateChanged += TimerController_StateChanged;
+            events.OnWorkStarted += Events_OnWorkStarted;
         }
 
         private void TimerController_StateChanged(TimerState state)
@@ -57,13 +63,18 @@ namespace WorkTimer.CustomControls.WorkBar
 
         private void UpdateTime(TimeSpan currentTime, Label label)
         {
-            if(currentTime.TotalHours > 0)
+            label.Text = $"{currentTime:hh\\:mm\\:ss}";
+        }
+
+        private void Events_OnWorkStarted(WorkLogModel work)
+        {
+            if (work.Type == WorkType.Work)
             {
-                label.Text = $"{currentTime:mm\\:ss}";
+                currentTimeLabel.ForeColor = Color.LawnGreen;
             }
             else
             {
-                label.Text = $"{currentTime:hh\\:mm}";
+                currentTimeLabel.ForeColor = Color.Wheat;
             }
         }
     }
