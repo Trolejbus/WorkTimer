@@ -51,7 +51,7 @@ namespace WorkTimer.CustomControls.WorkBar
 
         private void TimerController_OnTick()
         {
-            this.InvokeEx(f => f.UpdateTime(workTimerController.FullTime, breakTimeLabel));
+            this.InvokeEx(f => f.UpdateTime(workTimerController.CurrentTime, breakTimeLabel));
         }
 
         private void UpdateTime(TimeSpan currentTime, Label label)
